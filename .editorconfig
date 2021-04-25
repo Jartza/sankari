@@ -12,6 +12,6 @@ insert_final_newline = true
 charset = utf-8
 
 # Indentation override for all rascal files
-[*.ras,*.tru,*.inc]
+[*.{ras,tru,inc}]
 indent_style = tab
 indent_size = 4
