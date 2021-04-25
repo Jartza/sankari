@@ -32,7 +32,8 @@ var
 
 @use "input/key"
 
-//@define DEBUG		1				// uncomment to show debugging timings
+//@define DEBUG		1		// uncomment to show debugging timings
+//@define VBMDEBUG	1		// uncomment to enable VBM debug
 
 @VicMemoryConfig "16k"
 @projectsettings "ignorebasicsysstart" 0
@@ -56,9 +57,12 @@ begin
 	// Initialize VBL
 	Vbl_Init();
 	
+	// Set display mode to 2 and clear screen
 	vbmSetDisplayMode(2);
 	vbmclear( 0 );
+	@ifdef VBMDEBUG
 	vbmdebug(1);
+	@endif
 	vbmClearColor(RED + @MULTICOLOR);	
 
 	AUX_COLOR_AND_VOLUME := %00000010;
