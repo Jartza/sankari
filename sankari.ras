@@ -1,10 +1,9 @@
 program MainProgram;
 /*
-
-				_memoryzp 	- all zero page variables and resources
-				_constants	- game constants & parameters
-				_memory		- all main RAM variables
-				_lookup		- read only look up tables
+	_memoryzp 	- all zero page variables and resources
+	_constants	- game constants & parameters
+	_memory		- all main RAM variables
+	_lookup		- read only look up tables
 */
 var
 	i,j:byte;
