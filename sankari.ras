@@ -9,6 +9,8 @@ program MainProgram;
 var
 	i,j:byte;
 
+@use "input/key"
+
 @define DEBUG		1				// uncomment to show debugging timings
 @define KEYB 		197
 
