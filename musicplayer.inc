@@ -1,4 +1,4 @@
-// Music player for Fisichella (by Aleksi Eeben).
+// Music player for Fisichella (by Aleksi Eeben) song data.
 //
 // Player modified by Jari Tulilahti to be suitable
 // with TRSE + VBM, self-modifying code removed and support
