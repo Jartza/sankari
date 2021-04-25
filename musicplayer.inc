@@ -1,8 +1,26 @@
+// Music player for Fisichella (by Aleksi Eeben).
+//
+// Player modified by Jari Tulilahti to be suitable
+// with TRSE + VBM, self-modifying code removed and support
+// to track offset added.
+//
+// Expects the music data of Fisichella to be included as "musicData".
+// See binarydata.inc
+//
+// Fisichella file contains 512 bytes of music data, plus player. 
+// First two bytes are file loading address. Extract the binary music
+// data by: dd if=MUSICFILE of=musicdata.bin bs=1 count=512 skip=2
+//
+// First call music_init() with track offset (if your music file
+// contains multiple loops) and speed. to initialize the player.
+//
+// Call music_play() from raster interrupt or from similar constantly
+// timed place.
+//
+// Call music_stop() to rewind song and stop player.
+
 procedure music_play();
 begin
-	// Music player originally from Fisichella by Aleksi Eeben.
-	// Player modified to be suitable with TRSE + VBM, self-modifying
-	// code removed and support to track offset added.
 	asm("
 MusicPlay
         dec     $03EC
