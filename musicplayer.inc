@@ -47,7 +47,6 @@ L1C2F
         clc
         adc     #$04
         sta     $03EA
-        adc     offset
 L1C66
         tay
         lda     musicData,y
@@ -272,6 +271,7 @@ begin
         ora     #$08
         sta     $900E
         ldy     offset
+        sty		$03EA
         lda     musicData,y
         sta     $03F0
 L1DCA
