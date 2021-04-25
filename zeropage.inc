@@ -45,17 +45,16 @@ const fontSize: address = 8 * 64;	// 64 characters using 8 bytes each
 
 
 // memory - load addresses
-const aBaseData:	address = $3a00;		// address of binary data
-const aFont8:		address = aBaseData;
-const aFont4:		address = aFont8 + fontSize;
-const aTiles:		address = aFont4 + fontSize;
-const aMusic:		address = $3200;
+const aTiles:		address = $5800;
+const aFont8:		address = $5a00;
+const aFont4:		address = $5c00;
+const aMusic:		address = $5e00;
 	
 //	const aNext: 	address = aFont4 + fontSize; // where next data can start
 
 
 // incbin data
+tiles:		incbin("graph/tiles.bin", aTiles);
 font8:		incbin("chr/font8x8.bin", aFont8);
 font4:		incbin("chr/font4x8.bin", aFont4);
-tiles:		incbin("graph/tiles.bin", aTiles);
 musicData:	incbin("music/csankari.bin", aMusic);

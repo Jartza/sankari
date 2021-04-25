@@ -13,6 +13,11 @@
 // -------------------------------------------------------------------------------
 // CString
 
-	strTitle: cstring = ("HELLO WORLD");
-	strDesc: cstring = ("Skuurdi fuurdi fuu! FUU! FUU!");
+strTitle: cstring = ("F1 = change song");
+strSongTitle: cstring = ("Title song  ");
+strSongGame: cstring =  ("In-game song");
 
+song_strs: array[] of integer = (
+	#strSongTitle,
+	#strSongGame
+);

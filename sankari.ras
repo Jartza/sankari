@@ -1,5 +1,27 @@
-program MainProgram;
+program Sankari;
 /*
+					S.cavenger
+					A.rmed w/
+					N.otable
+					K.illing
+					A.rsenal
+					R.escue
+					I.ntent
+
+			for the 16kB expanded Vic 20
+
+				(C)2021 Jari Tulilahti
+					Firebay games
+
+	For Commodore Finland Game Competition 2021
+	
+	Game design and coding: Jari Tulilahti
+	Music: Mikko Suontausta
+	
+	Created with Turbo Rascal
+
+	---------------------------------------------------
+
 	_memoryzp 	- all zero page variables and resources
 	_constants	- game constants & parameters
 	_memory		- all main RAM variables
@@ -10,8 +32,7 @@ var
 
 @use "input/key"
 
-@define DEBUG		1				// uncomment to show debugging timings
-@define KEYB 		197
+//@define DEBUG		1				// uncomment to show debugging timings
 
 @VicMemoryConfig "16k"
 @projectsettings "ignorebasicsysstart" 0
@@ -46,10 +67,10 @@ begin
 
 	Vbl_Init(); // call before set display mode
 	
-	vbmSetDisplayMode( 2 );
+	vbmSetDisplayMode(2);
 	vbmclear( 0 );
 //	vbmdebug(1);
-	vbmClearColor( RED + @MULTICOLOR );	
+	vbmClearColor(RED + @MULTICOLOR);	
 
 	AUX_COLOR_AND_VOLUME := %00000010;
 	SCREEN_BG_COLOR := BLUE + SCREEN_BG_BLACK;
@@ -65,10 +86,22 @@ begin
 		vbmDrawTile(p1);
 	end;
 
-//	vbmDrawText( #strTitle, #font8, 2, 40, 8 );
-//	vbmDrawSmallTextO( #strDesc, #font4, 4, 50, 6 );
+	fori i:=0 to 19 do
+	begin
+		p1 := colmem[2] + i;
+		p1^ := WHITE;
+		p1 := colmem[3] + i;
+		p1^ := WHITE;
+		p1 := colmem[4] + i;
+		p1^ := WHITE;
+	end;
+	
+	vbmDrawText(#strTitle, #font8, 1, 40, 8);
+	p1 := song_strs[0];
+	vbmDrawSmallTextO(p1, #font4, 13, 60, 6);
 
 	i := 0;
+	j := 0;
 	music_init(i, 6);
 	
 	// main game loop
@@ -85,9 +118,12 @@ begin
 
 		Key::Read();
 		if (Key::Pressed(Key::KF1)) then begin
-			SCREEN_BG_COLOR := RED + SCREEN_BG_BLACK;
 			i := i xor $30;
+			j := j xor 1;
 			music_stop();
+			vbmClearSmallText(p1, #font4, 13, 60, 6);
+			p1 := song_strs[j];
+			vbmDrawSmallTextO(p1, #font4, 13, 60, 6);
 			music_init(i, 6);
 		end;
 
