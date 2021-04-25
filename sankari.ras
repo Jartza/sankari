@@ -39,37 +39,26 @@ var
 @projectsettings "basicsysaddress" $1200
 @projectsettings "startaddress" $2000
 
-// -------------------------------------------------------------------------------
-
-@include "_constants.ras"			// GAME PARAMETERS and CONSTANTS
-@include "_memoryzp.ras"			// variables in Zero Page and binary data
-
-
-// -------------------------------------------------------------------------------
-
-
-// -------------------------------------------------------------------------------
-// look up data
-@include "_memory.ras"				// variables in main RAM
-@include "_lookup.ras"				// read only lookup tables
+// Game has been split into multiple files for better organization,
+// including files here
+@include "constants.inc"	// Game parameters & constants
+@include "zeropage.inc"		// variables in Zero Page
+@include "binarydata.inc" 	// Binary data
+@include "memory.inc"		// variables in main RAM
+@include "lookup.inc"		// read only look-up-tables
+@include "musicplayer.inc"	// Music player
+@include "vbl.inc"			// Vertical blank interrupt
 
 
-// -------------------------------------------------------------------------------
-// source files						// add your include files here
-@include "musicplayer.inc"			// Music player
-@include "vbl.ras"					// vertical blank interrupt
-
-
-// -------------------------------------------------------------------------------
-// **** MAIN PROGRAM ****
-
+// Main program
 begin
 
-	Vbl_Init(); // call before set display mode
+	// Initialize VBL
+	Vbl_Init();
 	
 	vbmSetDisplayMode(2);
 	vbmclear( 0 );
-//	vbmdebug(1);
+	vbmdebug(1);
 	vbmClearColor(RED + @MULTICOLOR);	
 
 	AUX_COLOR_AND_VOLUME := %00000010;
