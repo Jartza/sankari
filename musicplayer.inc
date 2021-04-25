@@ -1,7 +1,8 @@
 procedure music_play();
 begin
 	// Music player originally from Fisichella by Aleksi Eeben.
-	// Player disassembled with da65 and modified to be suitable with TRSE + VBM.
+	// Player modified to be suitable with TRSE + VBM, self-modifying
+	// code removed and support to track offset added.
 	asm("
 MusicPlay
         dec     $03EC
