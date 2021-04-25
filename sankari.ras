@@ -84,8 +84,8 @@ begin
 		while (ticks = oldticks) do begin end;
 		oldticks := ticks;
 
-		if (peek(^@KEYB, 0) = 39) then begin
-			while (peek(^@KEYB, 0) = 39) then begin end;
+		Key::Read();
+		if (Key::Pressed(Key::KF1)) then begin
 			SCREEN_BG_COLOR := RED + SCREEN_BG_BLACK;
 			i := i xor $30;
 			music_stop();
