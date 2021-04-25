@@ -1,0 +1,99 @@
+program MainProgram;
+/*
+
+				_memoryzp 	- all zero page variables and resources
+				_constants	- game constants & parameters
+				_memory		- all main RAM variables
+				_lookup		- read only look up tables
+*/
+var
+	i,j:byte;
+
+@define DEBUG		1				// uncomment to show debugging timings
+@define KEYB 		197
+
+@VicMemoryConfig "16k"
+@projectsettings "ignorebasicsysstart" 0
+@projectsettings "basicsysaddress" $1200
+@projectsettings "startaddress" $2000
+
+// -------------------------------------------------------------------------------
+
+@include "_constants.ras"			// GAME PARAMETERS and CONSTANTS
+@include "_memoryzp.ras"			// variables in Zero Page and binary data
+
+
+// -------------------------------------------------------------------------------
+
+
+// -------------------------------------------------------------------------------
+// look up data
+@include "_memory.ras"				// variables in main RAM
+@include "_lookup.ras"				// read only lookup tables
+
+
+// -------------------------------------------------------------------------------
+// source files						// add your include files here
+@include "musicplayer.inc"			// Music player
+@include "vbl.ras"					// vertical blank interrupt
+
+
+// -------------------------------------------------------------------------------
+// **** MAIN PROGRAM ****
+
+begin
+
+	Vbl_Init(); // call before set display mode
+	
+	vbmSetDisplayMode( 2 );
+	vbmclear( 0 );
+//	vbmdebug(1);
+	vbmClearColor( RED + @MULTICOLOR );	
+
+	AUX_COLOR_AND_VOLUME := %00000010;
+	SCREEN_BG_COLOR := BLUE + SCREEN_BG_BLACK;
+
+	fori i := 0 to 19 do
+	begin
+		p1 := #tiles[0];
+		vbmSetPosition2(i<<3, 152);
+		vbmDrawTile(p1);
+		vbmSetPosition2(i<<3, 160);
+		vbmDrawTile(p1);
+		vbmSetPosition2(i<<3, 168);
+		vbmDrawTile(p1);
+	end;
+
+//	vbmDrawText( #strTitle, #font8, 2, 40, 8 );
+//	vbmDrawSmallTextO( #strDesc, #font4, 4, 50, 6 );
+
+	i := 0;
+	music_init(i, 6);
+	
+	// main game loop
+	while (true) offpage do 
+	begin
+		
+		@ifdef DEBUG	// for testing speed
+		SCREEN_BG_COLOR := BLACK + SCREEN_BG_BLACK;
+		@endif
+		
+		// wait for vertical blank
+		while (ticks = oldticks) do begin end;
+		oldticks := ticks;
+
+		if (peek(^@KEYB, 0) = 39) then begin
+			while (peek(^@KEYB, 0) = 39) then begin end;
+			SCREEN_BG_COLOR := RED + SCREEN_BG_BLACK;
+			i := i xor $30;
+			music_stop();
+			music_init(i, 6);
+		end;
+
+		@ifdef DEBUG	// for testing speed
+		SCREEN_BG_COLOR := CYAN + SCREEN_BG_BLACK;
+		@endif
+				
+	end;
+
+end.
